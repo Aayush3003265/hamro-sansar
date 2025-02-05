@@ -1,4 +1,7 @@
+import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./City.module.css";
+import { useEffect, useState } from "react";
+import ButtonBack from "./ButtonBack";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -9,13 +12,33 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function City() {
+  const { id } = useParams(); // get the id from the url
+  const [currentCity, setCurrentCity] = useState({});
+  const [searchParams, setsearchParams] = useSearchParams();
+  let lat = searchParams.get("lat");
+  let lng = searchParams.get("lan");
+  let name = searchParams.get("name");
+
+  useEffect(() => {
+    async function getCityInfo(id) {
+      try {
+        const response = await fetch(`http://localhost:8080/cities/${id}`);
+        const data = await response.json();
+        // console.log(data, "responce from is");
+        setCurrentCity(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getCityInfo(id);
+  }, []);
   // TEMP DATA
-  const currentCity = {
-    cityName: "Lisbon",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    notes: "My favorite city so far!",
-  };
+  // const currentCity = {
+  //   cityName: "Lisbon",
+  //   emoji: "🇵🇹",
+  //   date: "2027-10-31T15:59:59.138Z",
+  //   notes: "My favorite city so far!",
+  // };
 
   const { cityName, emoji, date, notes } = currentCity;
 
