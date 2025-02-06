@@ -1,4 +1,4 @@
-// import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { CitiesProvider } from "./contexts/CitiesContext"; // Import the context provider
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Products from "./pages/Products";
@@ -11,9 +11,11 @@ import CityList from "./components/CityList";
 import City from "./components/City";
 import Form from "./components/Form";
 import CountryList from "./components/CountryList";
+import Login from "./pages/Login";
 
 function App() {
   return (
+    // <FakeAuthProvider>
     <CitiesProvider>
       <BrowserRouter>
         <Routes>
@@ -21,7 +23,7 @@ function App() {
           <Route path="/product" element={<Products />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
-
+          <Route path="/login" element={<Login />} />
           <Route path="dashboard" element={<AppLayout />}>
             <Route index element={<CityList />} />
             <Route path="country" element={<CountryList />} />
@@ -33,6 +35,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </CitiesProvider>
+    // </FakeAuthProvider>
   );
 }
 
